@@ -1,21 +1,37 @@
 import React, { Component } from 'react';
+import giphy from 'giphy-api';
 import Searchbar from './searchbar';
+import GifList from './gif_list';
+
+const API_KEY = "Xp9Lwh44ujN0siP6Bq6sIBhdMyrhvYaL"
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      gifs: []
+      gifList: []
     };
   }
 
-  handleChange = (event) => {
-    console.log(event.target.value);
+  searchGif = (query) => {
+    const endpoint = `https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${query}&limit=10&offset=0&rating=g&lang=en`;
+    fetch(endpoint)
+    .then(response => response.json())
+    .then((info) => {
+        const gifs = info.data.map(gifObj => gifObj.url);
+        this.setState({
+            gifList: gifs
+        })
+    });
   }
 
   render() {
     return (
-      <Searchbar handleChange={this.handleChange} />
+      <div className="app">
+        <Searchbar searchGif={this.searchGif} />
+        <GifList gifList={this.state.gifList} />
+
+      </div>
     );
   }
 }
