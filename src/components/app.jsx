@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import giphy from 'giphy-api';
 import Searchbar from './searchbar';
 import GifList from './gif_list';
 
-const API_KEY = "Xp9Lwh44ujN0siP6Bq6sIBhdMyrhvYaL"
+const API_KEY = "Xp9Lwh44ujN0siP6Bq6sIBhdMyrhvYaL";
 
 class App extends Component {
   constructor() {
@@ -18,7 +17,7 @@ class App extends Component {
     fetch(endpoint)
     .then(response => response.json())
     .then((info) => {
-        const gifs = info.data.map(gifObj => gifObj.url);
+        const gifs = info.data.map(gifObj => gifObj.id);
         this.setState({
             gifList: gifs
         })
